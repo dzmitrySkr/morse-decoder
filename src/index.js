@@ -38,7 +38,7 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    let obj = {
+     let obj = {
     a: '.-',
     b: '-...',
     c: '-.-.',
@@ -105,7 +105,9 @@ function decode(expr) {
    }))
   });
 
- return miniarray.join('').split(',').join('');
+  let z = miniarray.join('').split(',').join('');
+
+ return z;
 }
 
 module.exports = {
