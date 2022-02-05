@@ -70,7 +70,7 @@ function decode(expr) {
 
   let miniarray = []
   let ss = []
-  let array = result.split('');
+  let array = expr.split('');
   
   array.forEach(el => {
     
