@@ -1,75 +1,76 @@
+const MORSE_TABLE = {
+    '.-':     'a',
+    '-...':   'b',
+    '-.-.':   'c',
+    '-..':    'd',
+    '.':      'e',
+    '..-.':   'f',
+    '--.':    'g',
+    '....':   'h',
+    '..':     'i',
+    '.---':   'j',
+    '-.-':    'k',
+    '.-..':   'l',
+    '--':     'm',
+    '-.':     'n',
+    '---':    'o',
+    '.--.':   'p',
+    '--.-':   'q',
+    '.-.':    'r',
+    '...':    's',
+    '-':      't',
+    '..-':    'u',
+    '...-':   'v',
+    '.--':    'w',
+    '-..-':   'x',
+    '-.--':   'y',
+    '--..':   'z',
+    '.----':  '1',
+    '..---':  '2',
+    '...--':  '3',
+    '....-':  '4',
+    '.....':  '5',
+    '-....':  '6',
+    '--...':  '7',
+    '---..':  '8',
+    '----.':  '9',
+    '-----':  '0',
+};
 
 function decode(expr) {
-     let obj = {
-    a: '.-',
-    b: '-...',
-    c: '-.-.',
-    d: '-..',
-    e: '.',
-    f: '..-.',
-    g: '--.',
-    h: '....',
-    i: '..',
-    j: '.---',
-    k: '-.-',
-    l: '.-..',
-    m: '--',
-    n: '-.',
-    o: '---',
-    p: '.--.',
-    q: '--.-',
-    r: '.-.',
-    s: '...',
-    t: '-',
-    u: '..-',
-    v: '...-',
-    w: '.--',
-    x: '-..-',
-    y: '-.--',
-    z: '--..',
-    ' ': 's',
-  }
-
-  let miniarray = []
-  let ss = []
-  let array = expr.split('');
-  
-  array.forEach(el => {
-    
-    ss = [];
-    
-   let a = obj[el];
-   let b = a.split('')
-
-   console.log(b);
-   for(i=0; i< 10 - (b.length *2); i++){
-     ss.push(0);
-   }
+    re=/(.{10}|.)/g
+    re1=/(.{2}|.)/g
+    let res = expr.match(re);
+    let result = []
    
-   
-   b.forEach(((elem, index) => {
+    for(let i = 0; i < res.length;i++){
+      let a = res[i].match(re1);
 
-  
-    if (elem === '.'){
-      ss.push(10)
+      let b = a.filter((i) => i !== "00");
+
+      let s = [];
+      for(let j = 0; j < b.length;j++){
+        if (b[j] === '10'){
+          s.push('.');
+        } else if (b[j] === '11'){
+          s.push('-');
+        } else {
+          s.push(' ');
+        }
       }
-    if (elem === '-') {
-      ss.push(11)
-    } 
-
-    if (elem === 's'){
-      ss = ['**********']
-      miniarray.push(ss)
-    }else if(index === b.length-1){
-      miniarray.push(ss)
+     
+      if(Object.keys(MORSE_TABLE).indexOf(s.join('')) !== -1){
+        for(let key in MORSE_TABLE){
+          if(s.join('') === key){
+            result.push(MORSE_TABLE[key])
+          }
+        }
+      } else {
+        result.push(' ');
+      }
     }
-    
-   }))
-  });
 
-  let z = miniarray.join('').split(',').join('');
-
- return z;
+    return result.join('')
 }
 
 module.exports = {
